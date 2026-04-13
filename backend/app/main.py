@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.router import router as market_router
+from app.api.router import api_router as market_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -12,4 +12,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(market_router, prefix="/market")
+app.include_router(market_router, prefix="/api")

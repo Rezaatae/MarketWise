@@ -14,7 +14,7 @@ function App() {
   const [data, setData] = useState<PricePoint[]>([]);
 
   const fetchData = async (): Promise<void> => {
-    const res = await fetch(`http://localhost:8000/market/prices/${symbol}`);
+    const res = await fetch(`http://localhost:8000/api/market/prices/${symbol}`);
     const json: ApiResponse = await res.json();
 
     const formatted: PricePoint[] = json.timestamps.map((t, i) => ({
