@@ -1,15 +1,13 @@
 import { useState } from "react";
 import PriceChart from "./components/PriceChart";
+import type { components } from "./types/api";
 
 type PricePoint = {
   date: string;
   price: number;
 };
 
-type ApiResponse = {
-  timestamps: string[];
-  prices: number[];
-};
+type ApiResponse = components["schemas"]["PriceResponse"];
 
 function App() {
   const [symbol, setSymbol] = useState<string>("AAPL");
