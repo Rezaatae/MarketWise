@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.services.alpha_vantage import get_daily_prices
-from app.models.market import PriceResponse
+from app.clients.alpha_vantage import get_daily_prices
+from app.schemas.market import PriceResponse
 
 router = APIRouter()
 

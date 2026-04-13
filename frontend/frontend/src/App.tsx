@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PriceChart from "./PriceChart";
+import PriceChart from "./components/PriceChart";
 
 type PricePoint = {
   date: string;
