@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/market/prices/{symbol}": {
+    "/api/market/prices/{symbol}": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,7 +12,7 @@ export interface paths {
             cookie?: never;
         };
         /** Fetch Prices */
-        get: operations["fetch_prices_market_prices__symbol__get"];
+        get: operations["fetch_prices_api_market_prices__symbol__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -30,12 +30,25 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** OHLCV */
+        OHLCV: {
+            /** Open */
+            open: number;
+            /** High */
+            high: number;
+            /** Low */
+            low: number;
+            /** Close */
+            close: number;
+            /** Volume */
+            volume: number;
+        };
         /** PriceResponse */
         PriceResponse: {
             /** Timestamps */
             timestamps: string[];
             /** Prices */
-            prices: number[];
+            prices: components["schemas"]["OHLCV"][];
         };
         /** ValidationError */
         ValidationError: {
@@ -59,7 +72,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    fetch_prices_market_prices__symbol__get: {
+    fetch_prices_api_market_prices__symbol__get: {
         parameters: {
             query?: never;
             header?: never;

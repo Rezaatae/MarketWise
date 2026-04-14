@@ -4,7 +4,13 @@ import type { components } from "../types/api";
 
 type PricePoint = {
   date: string;
-  price: number;
+  price: {
+            open: number;
+            high: number;
+            low: number;
+            close: number;
+            volume: number;
+        };
 };
 
 type PriceResponse = components["schemas"]["PriceResponse"];
