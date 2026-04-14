@@ -20,7 +20,11 @@ def get_daily_prices(symbol: str):
 
     for date, values in sorted(time_series.items()):
         dates.append(date)
-        prices.append(float(values["4. close"]))
+        prices.append({"open": float(values["1. open"]),
+                       "high": float(values["2. high"]),
+                       "low": float(values["3. low"]),
+                       "close": float(values["4. close"]),
+                       "volume": float(values["5. volume"])})
 
     return {
         "timestamps": dates,

@@ -1,7 +1,13 @@
 from pydantic import BaseModel
 from typing import List
-from datetime import datetime
+
+class OHLCV(BaseModel):
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: float
 
 class PriceResponse(BaseModel):
     timestamps: List[str]
-    prices: List[float]
+    prices: List[OHLCV]
