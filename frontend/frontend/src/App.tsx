@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PriceChart from "./components/PriceChart";
 import { useMarket } from "./hooks/useMarket";
+import OHLCVTable from "./components/Table/OHLCVTable";
 
 function App() {
   const [symbol, setSymbol] = useState("AAPL");
@@ -20,6 +21,7 @@ function App() {
       </button>
 
       <PriceChart data={data} />
+      <OHLCVTable data={data} />
     </div>
   );
 }
