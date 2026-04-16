@@ -1,5 +1,6 @@
 import requests
 from app.core.config import API_KEY
+from app.schemas.market import OHLCV
 
 BASE_URL = "https://www.alphavantage.co/query"
 
@@ -20,11 +21,17 @@ def get_daily_prices(symbol: str):
 
     for date, values in sorted(time_series.items()):
         dates.append(date)
-        prices.append({"open": float(values["1. open"]),
-                       "high": float(values["2. high"]),
-                       "low": float(values["3. low"]),
-                       "close": float(values["4. close"]),
-                       "volume": float(values["5. volume"])})
+        price_obj = OHLCV(
+            open=values.get("1. open"),
+            high=values.get("2. high"),
+            low=values.get("3. low"),
+            close=values.get("4. close"),
+            volume=values.get("5. volume"),
+        )
+
+        if all(value is None for value in price_obj.model_dump().values()):
+            continue
+        prices.append(price_obj.model_dump())
 
     return {
         "timestamps": dates,
