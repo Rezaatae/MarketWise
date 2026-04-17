@@ -27,7 +27,18 @@ async def upload_csv(file: UploadFile = File(...)):
         timestamps.append(row.get("timestamp"))
         prices.append(price)
 
-    return {
-        'timestamps':timestamps,
-        'prices':prices
-    }
+    return format_ohlcv(timestamps, prices)
+
+def format_ohlcv(timestamps, prices):
+    result = []
+
+    for i, price in enumerate(prices):
+        if not hasattr(price, "model_dump"):
+            continue
+
+        result.append({
+            "date": timestamps[i] if i < len(timestamps) else None,
+            "price": price.model_dump(),
+        })
+
+    return result

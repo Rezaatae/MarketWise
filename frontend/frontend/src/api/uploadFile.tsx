@@ -5,7 +5,7 @@ export async function uploadFile(file: File){
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("http://localhost:8000/api/market/upload-csv", {
+    const res = await fetch("http://localhost:8000/api/upload/upload-csv", {
       method: "POST",
       body: formData,
     });
