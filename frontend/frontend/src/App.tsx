@@ -27,8 +27,8 @@ function App() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <OHLCVTable data={data} />
       <PriceChart data={data} />
+      <OHLCVTable data={data} />
     </div>
   );
 }

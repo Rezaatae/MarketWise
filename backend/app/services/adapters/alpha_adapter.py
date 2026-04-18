@@ -30,4 +30,4 @@ def alpha_to_ohlcv(symbol: str):
                 )
             )
         )
-        return result
+    return result

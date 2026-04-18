@@ -26,7 +26,7 @@ async def csv_to_ohlcv(file: UploadFile):
 
         result.append(
             OHLCVRow(
-                data=row.get("timestamp") or "",
+                date=row.get("timestamp") or "",
                 price=price
             )
         )

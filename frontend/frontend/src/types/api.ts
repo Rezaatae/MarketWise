@@ -21,10 +21,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/upload/upload-csv": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload Csv */
+        post: operations["upload_csv_api_upload_upload_csv_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Body_upload_csv_api_upload_upload_csv_post */
+        Body_upload_csv_api_upload_upload_csv_post: {
+            /** File */
+            file: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -33,22 +55,30 @@ export interface components {
         /** OHLCV */
         OHLCV: {
             /** Open */
-            open: number;
+            open: number | null;
             /** High */
-            high: number;
+            high: number | null;
             /** Low */
-            low: number;
+            low: number | null;
             /** Close */
-            close: number;
+            close: number | null;
             /** Volume */
-            volume: number;
+            volume: number | null;
         };
-        /** PriceResponse */
-        PriceResponse: {
-            /** Timestamps */
-            timestamps: string[];
-            /** Prices */
-            prices: components["schemas"]["OHLCV"][];
+        /** OHLCVResponse */
+        OHLCVResponse: {
+            /** Symbol */
+            symbol: string;
+            /** Source */
+            source: string;
+            /** Data */
+            data: components["schemas"]["OHLCVRow"][];
+        };
+        /** OHLCVRow */
+        OHLCVRow: {
+            /** Date */
+            date: string;
+            price: components["schemas"]["OHLCV"];
         };
         /** ValidationError */
         ValidationError: {
@@ -89,7 +119,42 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PriceResponse"];
+                    "application/json": components["schemas"]["OHLCVResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_csv_api_upload_upload_csv_post: {
+        parameters: {
+            query: {
+                symbol: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_csv_api_upload_upload_csv_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OHLCVResponse"];
                 };
             };
             /** @description Validation Error */

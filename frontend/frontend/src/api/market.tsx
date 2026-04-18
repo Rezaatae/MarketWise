@@ -9,7 +9,7 @@ export async function uploadCSV(file: File, symbol: string) {
   const formData = new FormData();
   formData.append("file", file);
 
-  const res = await fetch(`${BASE_URL}/api/upload/upload-csv"`,{
+  const res = await fetch(`${BASE_URL}/api/upload/upload-csv?symbol=${symbol}`,{
     method: "POST",
     body: formData,
   });
