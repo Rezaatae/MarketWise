@@ -1,36 +1,34 @@
-import { useState } from "react";
+import { useMarketData } from "./hooks/useMarketData";
+import SymbolInput from "./components/SymbolInput";
+import LoadButton from "./components/LoadButton";
+import FileUploader from "./components/FileUploader";
+import OHLCVTable from "./components/OHLCVTable";
 import PriceChart from "./components/PriceChart";
-import { useMarket } from "./hooks/useMarket";
-import OHLCVTable from "./components/Table/OHLCVTable";
-import FileUploader from "./components/FileUploader/FileUploader";
-import { useFileUploader } from "./hooks/useFileUploader";
 
 function App() {
-  const [symbol, setSymbol] = useState("AAPL");
-  const { data, load } = useMarket();
-  const { upload, loading, error, fileData } = useFileUploader();
-
+  const {
+      data,
+      symbol,
+      setSymbol,
+      loadAlpha,
+      loadCSV,
+      loading,
+      error,
+    } = useMarketData();
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: 20 }}>
       <h1>Market Dashboard</h1>
 
-      <input
-        value={symbol}
-        onChange={(e) => setSymbol(e.target.value)}
-      />
+      <SymbolInput value={symbol} onChange={setSymbol} />
+      <LoadButton onClick={loadAlpha} loading={loading} />
 
-      <button onClick={() => load(symbol)}>
-        Load Data
-      </button>
+      <FileUploader onUpload={loadCSV} />
 
-      <div>
-        <FileUploader onUpload={upload} loading={loading} />
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </div>
-      <OHLCVTable data={fileData ?? []} />
-      <PriceChart data={data} />
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
       <OHLCVTable data={data} />
+      <PriceChart data={data} />
     </div>
   );
 }

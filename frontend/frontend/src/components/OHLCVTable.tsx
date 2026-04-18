@@ -1,27 +1,17 @@
-import React from "react";
-import "./OHLCVTable.css";
-
-type OHLCVTableRow = {
+type Row = {
   date: string;
   price: {
-            /** Open */
-            open: number;
-            /** High */
-            high: number;
-            /** Low */
-            low: number;
-            /** Close */
-            close: number;
-            /** Volume */
-            volume: number;
-        };
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    volume: number;
+  };
 };
 
-type Props = {
-  data: OHLCVTableRow[];
-};
+export default function OHLCVTable({ data }: { data: Row[] }) {
+  if (!data || data.length === 0) return <p>No data</p>;
 
-const OHLCVTable: React.FC<Props> = ({ data }) => {
   return (
     <table>
       <thead>
@@ -34,7 +24,6 @@ const OHLCVTable: React.FC<Props> = ({ data }) => {
           <th>Volume</th>
         </tr>
       </thead>
-
       <tbody>
         {data.map((row) => (
           <tr key={row.date}>
@@ -49,6 +38,4 @@ const OHLCVTable: React.FC<Props> = ({ data }) => {
       </tbody>
     </table>
   );
-};
-
-export default OHLCVTable;
+}
