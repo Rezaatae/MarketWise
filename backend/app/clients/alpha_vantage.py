@@ -12,28 +12,5 @@ def get_daily_prices(symbol: str):
     }
 
     response = requests.get(BASE_URL, params=params)
-    data = response.json()
-
-    time_series = data.get("Time Series (Daily)", {})
-
-    dates = []
-    prices = []
-
-    for date, values in sorted(time_series.items()):
-        dates.append(date)
-        price_obj = OHLCV(
-            open=values.get("1. open"),
-            high=values.get("2. high"),
-            low=values.get("3. low"),
-            close=values.get("4. close"),
-            volume=values.get("5. volume"),
-        )
-
-        if all(value is None for value in price_obj.model_dump().values()):
-            continue
-        prices.append(price_obj.model_dump())
-
-    return {
-        "timestamps": dates,
-        "prices": prices
-    }
+    response.raise_for_status()
+    return response.json()

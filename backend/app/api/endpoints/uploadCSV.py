@@ -1,9 +1,9 @@
 from fastapi import APIRouter, UploadFile, File
-from app.services.uploadFile import upload_csv as upload_csv_service
-from app.schemas.market import PriceResponse
+from app.services.market_data_service import get_market_data
+from app.schemas.response_model import OHLCVResponse
 
 router = APIRouter()
 
-@router.post("/upload-csv")
-async def upload_csv(file: UploadFile = File(...)):
-    return await upload_csv_service(file)
+@router.post("/upload-csv", response_model=OHLCVResponse)
+async def upload_csv(file: UploadFile, symbol: str):
+    return await get_market_data("csv", symbol=symbol, file=file)
