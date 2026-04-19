@@ -73,12 +73,20 @@ export interface components {
             source: string;
             /** Data */
             data: components["schemas"]["OHLCVRow"][];
+            returns: components["schemas"]["Returns"];
         };
         /** OHLCVRow */
         OHLCVRow: {
             /** Date */
             date: string;
             price: components["schemas"]["OHLCV"];
+        };
+        /** Returns */
+        Returns: {
+            /** Simple */
+            simple: (number | null)[];
+            /** Log */
+            log: (number | null)[];
         };
         /** ValidationError */
         ValidationError: {

@@ -1,6 +1,5 @@
 import requests
 from app.core.config import API_KEY
-from app.schemas.market import OHLCV, PriceResponse
 
 BASE_URL = "https://www.alphavantage.co/query"
 
