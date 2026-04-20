@@ -73,7 +73,7 @@ export interface components {
             source: string;
             /** Data */
             data: components["schemas"]["OHLCVRow"][];
-            returns: components["schemas"]["Returns"];
+            returns?: components["schemas"]["Returns"] | null;
         };
         /** OHLCVRow */
         OHLCVRow: {

@@ -8,4 +8,4 @@ class OHLCVResponse(BaseModel):
     symbol: str
     source: str
     data: List[OHLCVRow]
-    returns: Returns
+    returns: Returns | None = None

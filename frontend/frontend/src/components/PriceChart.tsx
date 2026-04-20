@@ -6,22 +6,9 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
+import type { components } from "../types/api";
 
-type PricePoint = {
-  date: string;
-  price: {
-            /** Open */
-            open: number;
-            /** High */
-            high: number;
-            /** Low */
-            low: number;
-            /** Close */
-            close: number;
-            /** Volume */
-            volume: number;
-        };
-};
+type PricePoint = components["schemas"]["OHLCVRow"]
 
 type PriceChartProps = {
   data: PricePoint[];
@@ -35,7 +22,7 @@ function PriceChart({ data }: PriceChartProps) {
       <XAxis dataKey="date" />
       <YAxis />
       <Tooltip formatter={(value: any) => value?.close ?? value} />
-      <Line type="monotone" dataKey="price" stroke="#8884d8" />
+      <Line type="monotone" dataKey="price.close" stroke="#8884d8" />
     </LineChart>
   );
 }

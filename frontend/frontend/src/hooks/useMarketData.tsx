@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { fetchAlpha, uploadCSV } from "../api/market";
+import type { components } from "../types/api";
+
+type MarketResponse = components["schemas"]["OHLCVResponse"]
 
 export function useMarketData() {
-    const [data, setData] = useState<any[]>([])
+    const [data, setData] = useState<MarketResponse | null>(null);
     const [symbol, setSymbol] = useState("AAPL");
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null);
@@ -11,9 +14,10 @@ export function useMarketData() {
         try {
             setLoading(true);
             const res = await fetchAlpha(symbol);
-            setData(res.data);
+            setData(res);
         }catch (e){
             setError("Failed to load market data");
+            console.log(e)
         }finally{
             setLoading(false);
         }
@@ -23,7 +27,7 @@ export function useMarketData() {
         try {
             setLoading(true);
         const res = await uploadCSV(file, symbol);
-            setData(res.data);
+            setData(res);
         } catch (e) {
             setError("Failed to upload CSV");
         } finally {
