@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { fetchAlpha, uploadCSV } from "../api/market";
 import type { components } from "../types/api";
+import { mapToPriceData, mapToReturnData } from "../mappers/marketMapper";
+import type { PricePoint, ReturnPoint } from "../types/ui";
 
 type MarketResponse = components["schemas"]["OHLCVResponse"]
 
@@ -9,11 +11,15 @@ export function useMarketData() {
     const [symbol, setSymbol] = useState("AAPL");
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null);
+    const [priceData, setPriceData] = useState<PricePoint[]>([]);
+    const [returnData, setReturnData] = useState<ReturnPoint[]>([]);
 
     const loadAlpha = async () => {
         try {
             setLoading(true);
             const res = await fetchAlpha(symbol);
+            setPriceData(mapToPriceData(res))
+            setReturnData(mapToReturnData(res))
             setData(res);
         }catch (e){
             setError("Failed to load market data");
@@ -36,6 +42,8 @@ export function useMarketData() {
     };
     return {
     data,
+    priceData,
+    returnData,
     symbol,
     setSymbol,
     loadAlpha,

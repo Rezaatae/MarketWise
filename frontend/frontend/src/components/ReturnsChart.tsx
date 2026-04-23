@@ -8,21 +8,14 @@ import {
 } from "recharts";
 
 type Props = {
-  timestamps: string[];
-  returns: (number | null)[];
+  data: { date: string; value: number }[];
 };
 
-function ReturnsChart({ timestamps, returns }: Props) {
-  // Combine arrays into chart-friendly format
-  const chartData = timestamps.map((date, i) => ({
-    date,
-    value: returns[i],
-  }));
-
+function ReturnsChart({ data }: Props) {
   return (
     <div>
       <h3>Simple Returns</h3>
-      <LineChart width={800} height={400} data={chartData}>
+      <LineChart width={800} height={400} data={data}>
         <Line
           type="monotone"
           dataKey="value"
