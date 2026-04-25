@@ -5,6 +5,7 @@ import FileUploader from "./components/FileUploader";
 import OHLCVTable from "./components/OHLCVTable";
 import PriceChart from "./components/PriceChart";
 import ReturnsChart from "./components/ReturnsChart";
+import styles from './App.module.css';
 
 function App() {
   const {
@@ -21,26 +22,43 @@ function App() {
 
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Market Dashboard</h1>
+    <div className={styles.app}>
+      <h1 style={{ color: 'white', backgroundColor: 'black' }}>Header</h1>
 
-      <SymbolInput value={symbol} onChange={setSymbol} />
-      <LoadButton onClick={loadAlpha} loading={loading} />
-
-      <FileUploader onUpload={loadCSV} />
-      {/* {data && (
-        <>
-          <ReturnsChart
-            data={data}
-          />
-        
-        </>
-      )} */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <PriceChart data={data?.data ?? []} />
-      <OHLCVTable data={data?.data ?? []} />
+      <div className={styles.layout}>
+        <h1 style={{ color: 'white', backgroundColor: 'black' }}>sidebar section</h1>
+        <main className={styles.chartsection}>
+          <h1 style={{ color: 'white', backgroundColor: 'black' }}>|chart section</h1>
+          <div className={styles.chartSection}>
+            <h1 style={{ color: 'white', backgroundColor: 'black' }}>|price chart</h1>
+          </div>
+          <div className={styles.metricsSection}>
+            <h1 style={{ color: 'white', backgroundColor: 'black' }}>|metrics section</h1>
+          </div>
+        </main>
+      </div>
+      
     </div>
+    // <div style={{ padding: 20 }}>
+    //   <h1>Market Dashboard</h1>
+
+    //   <SymbolInput value={symbol} onChange={setSymbol} />
+    //   <LoadButton onClick={loadAlpha} loading={loading} />
+
+    //   <FileUploader onUpload={loadCSV} />
+    //   {/* {data && (
+    //     <>
+    //       <ReturnsChart
+    //         data={data}
+    //       />
+        
+    //     </>
+    //   )} */}
+    //   {error && <p style={{ color: "red" }}>{error}</p>}
+
+    //   <PriceChart data={data?.data ?? []} />
+    //   <OHLCVTable data={data?.data ?? []} />
+    // </div>
   );
 }
 
