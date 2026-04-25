@@ -1,15 +1,16 @@
-from pydantic import BaseModel
-from typing import Optional
-
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import List
 
 class OHLCV(BaseModel):
-    open: Optional[float]
-    high: Optional[float]
-    low: Optional[float]
-    close: Optional[float]
-    volume: Optional[float]
+    timestamp: datetime
+    open: float = Field(..., gt=0)
+    high: float = Field(..., gt=0)
+    low: float = Field(..., gt=0)
+    close: float = Field(..., gt=0)
+    volume: float = Field(..., ge=0)
 
 
-class OHLCVRow(BaseModel):
-    date: str
-    price: OHLCV
+class OHLCVSeries(BaseModel):
+    symbol: str
+    data: List[OHLCV]

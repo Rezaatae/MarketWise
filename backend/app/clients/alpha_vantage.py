@@ -3,7 +3,7 @@ from app.core.config import API_KEY
 
 BASE_URL = "https://www.alphavantage.co/query"
 
-def get_daily_prices(symbol: str):
+async def get_daily_prices(symbol: str):
     params = {
         "function": "TIME_SERIES_DAILY",
         "symbol": symbol,

@@ -1,7 +1,7 @@
 import csv
 from io import StringIO
 from fastapi import UploadFile
-from app.schemas.ohlcv import OHLCV, OHLCVRow
+from app.schemas.ohlcv import OHLCV, OHLCVSeries
 
 
 async def csv_to_ohlcv(file: UploadFile):
