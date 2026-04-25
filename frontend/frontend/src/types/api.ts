@@ -4,17 +4,17 @@
  */
 
 export interface paths {
-    "/api/market/prices/{symbol}": {
+    "/api/market/alpha-market-data/{symbol}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Fetch Prices */
-        get: operations["fetch_prices_api_market_prices__symbol__get"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Compute Alpha Metrics */
+        post: operations["compute_alpha_metrics_api_market_alpha_market_data__symbol__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -52,41 +52,71 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
-        /** OHLCV */
-        OHLCV: {
-            /** Open */
-            open: number | null;
-            /** High */
-            high: number | null;
-            /** Low */
-            low: number | null;
+        /** MarketResponse */
+        MarketResponse: {
+            /** Timestamps */
+            timestamps: string[];
             /** Close */
-            close: number | null;
-            /** Volume */
-            volume: number | null;
+            close: number[];
+            /** Simple Returns */
+            simple_returns?: number[] | null;
+            /** Log Returns */
+            log_returns?: number[] | null;
+            /** Sma */
+            sma?: number[] | null;
+            /** Ema */
+            ema?: number[] | null;
+            /** Rolling Std */
+            rolling_std?: number[] | null;
+            /** Annualized Volatility */
+            annualized_volatility?: number | null;
+            /** Sharpe Ratio */
+            sharpe_ratio?: number | null;
+            /** Max Drawdown */
+            max_drawdown?: number | null;
         };
-        /** OHLCVResponse */
-        OHLCVResponse: {
-            /** Symbol */
-            symbol: string;
-            /** Source */
-            source: string;
-            /** Data */
-            data: components["schemas"]["OHLCVRow"][];
-            returns?: components["schemas"]["Returns"] | null;
-        };
-        /** OHLCVRow */
-        OHLCVRow: {
-            /** Date */
-            date: string;
-            price: components["schemas"]["OHLCV"];
-        };
-        /** Returns */
-        Returns: {
-            /** Simple */
-            simple: (number | null)[];
-            /** Log */
-            log: (number | null)[];
+        /** MetricsRequest */
+        MetricsRequest: {
+            /**
+             * Window
+             * @default 20
+             */
+            window: number;
+            /**
+             * Risk Free Rate
+             * @default 0
+             */
+            risk_free_rate: number;
+            /**
+             * Compute Returns
+             * @default true
+             */
+            compute_returns: boolean;
+            /**
+             * Compute Sma
+             * @default true
+             */
+            compute_sma: boolean;
+            /**
+             * Compute Ema
+             * @default true
+             */
+            compute_ema: boolean;
+            /**
+             * Compute Volatility
+             * @default false
+             */
+            compute_volatility: boolean;
+            /**
+             * Compute Sharpe
+             * @default false
+             */
+            compute_sharpe: boolean;
+            /**
+             * Compute Drawdown
+             * @default false
+             */
+            compute_drawdown: boolean;
         };
         /** ValidationError */
         ValidationError: {
@@ -110,7 +140,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    fetch_prices_api_market_prices__symbol__get: {
+    compute_alpha_metrics_api_market_alpha_market_data__symbol__post: {
         parameters: {
             query?: never;
             header?: never;
@@ -119,7 +149,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MetricsRequest"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -127,7 +161,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OHLCVResponse"];
+                    "application/json": components["schemas"]["MarketResponse"];
                 };
             };
             /** @description Validation Error */
@@ -162,7 +196,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OHLCVResponse"];
+                    "application/json": components["schemas"]["MarketResponse"];
                 };
             };
             /** @description Validation Error */

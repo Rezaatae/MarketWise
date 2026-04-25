@@ -1,7 +1,24 @@
-const BASE_URL = "http://localhost:8000";
+import type { components } from "../types/api";
 
-export async function fetchAlpha(symbol:string) {
-  const res = await fetch(`${BASE_URL}/api/market/prices/${symbol}`)
+const BASE_URL = "http://localhost:8000";
+type MarketResponseDTO = components["schemas"]["MarketResponse"];
+
+export async function fetchAlpha(symbol: string): Promise<MarketResponseDTO> {
+  const res = await fetch(
+    `${BASE_URL}/api/market/alpha-market-data/${symbol}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error(await res.text());
+  }
+
   return res.json();
 }
 

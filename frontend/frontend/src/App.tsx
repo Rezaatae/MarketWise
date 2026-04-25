@@ -1,11 +1,8 @@
-import { useMarketData } from "./hooks/useMarketData";
-import SymbolInput from "./components/SymbolInput";
-import LoadButton from "./components/LoadButton";
-import FileUploader from "./components/FileUploader";
-import OHLCVTable from "./components/OHLCVTable";
-import PriceChart from "./components/PriceChart";
-import ReturnsChart from "./components/ReturnsChart";
 import styles from './App.module.css';
+import LoadButton from './components/LoadButton';
+import PriceChart from './components/PriceChart';
+import { useMarketData } from './hooks/useMarketData';
+
 
 function App() {
   const {
@@ -13,17 +10,15 @@ function App() {
     symbol,
     setSymbol,
     loadAlpha,
-    loadCSV,
     loading,
     error,
   } = useMarketData();
-  
-  console.log(data)
 
 
   return (
     <div className={styles.app}>
       <h1 style={{ color: 'white', backgroundColor: 'black' }}>Header</h1>
+      <LoadButton onClick={loadAlpha} loading={loading} />
 
       <div className={styles.layout}>
         <h1 style={{ color: 'white', backgroundColor: 'black' }}>sidebar section</h1>
@@ -31,6 +26,7 @@ function App() {
           <h1 style={{ color: 'white', backgroundColor: 'black' }}>|chart section</h1>
           <div className={styles.chartSection}>
             <h1 style={{ color: 'white', backgroundColor: 'black' }}>|price chart</h1>
+            <PriceChart data={data ?? []} />
           </div>
           <div className={styles.metricsSection}>
             <h1 style={{ color: 'white', backgroundColor: 'black' }}>|metrics section</h1>
