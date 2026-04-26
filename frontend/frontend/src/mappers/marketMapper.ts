@@ -3,7 +3,6 @@ import type { PriceChartVM, PricePoint } from "../types/ui";
 
 type MarketResponseDTO = components["schemas"]["MarketResponse"];
 
-
 export function mapToPriceChartVM(dto: MarketResponseDTO): PriceChartVM {
   return {
     labels: dto.timestamps.map(t =>

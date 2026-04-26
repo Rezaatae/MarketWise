@@ -62,6 +62,8 @@ export interface components {
             simple_returns?: number[] | null;
             /** Log Returns */
             log_returns?: number[] | null;
+            /** Total Return */
+            total_return?: number | null;
             /** Sma */
             sma?: number[] | null;
             /** Ema */
@@ -104,17 +106,17 @@ export interface components {
             compute_ema: boolean;
             /**
              * Compute Volatility
-             * @default false
+             * @default true
              */
             compute_volatility: boolean;
             /**
              * Compute Sharpe
-             * @default false
+             * @default true
              */
             compute_sharpe: boolean;
             /**
              * Compute Drawdown
-             * @default false
+             * @default true
              */
             compute_drawdown: boolean;
         };

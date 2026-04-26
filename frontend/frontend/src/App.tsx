@@ -16,7 +16,6 @@ function App() {
     loading,
     error,
   } = useMarketData();
-  const [selectedAsset, setSelectedAsset] = useState('AAPL');
   const [settings, setSettings] = useState<MarketSettings>({
   symbol: "AAPL",
   window: 20,
@@ -24,12 +23,6 @@ function App() {
   volPeriod: 30,
   showSignals: true,
 });
-  const handleApplySettings = async (settings: MarketSettings) => {
-  console.log(settings);
-
-  // call your existing load function but pass config
-  await loadAlpha(settings.symbol, settings);
-};
 
   return (
     <div className={styles.app}>

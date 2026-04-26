@@ -21,6 +21,7 @@ class MarketResponse(BaseModel):
 
     simple_returns: Optional[List[float]] = None
     log_returns: Optional[List[float]] = None
+    total_return: Optional[float] = None
 
     sma: Optional[List[float]] = None
     ema: Optional[List[float]] = None
@@ -38,6 +39,6 @@ class MetricsRequest(BaseModel):
     compute_returns: bool = True
     compute_sma: bool = True
     compute_ema: bool = True
-    compute_volatility: bool = False
-    compute_sharpe: bool = False
-    compute_drawdown: bool = False
+    compute_volatility: bool = True
+    compute_sharpe: bool = True
+    compute_drawdown: bool = True
