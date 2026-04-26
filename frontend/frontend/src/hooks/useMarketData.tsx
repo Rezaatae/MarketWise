@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchAlpha } from "../api/market";
-import { mapToChartData } from "../mappers/marketMapper";
+import { mapToPricePoints } from "../mappers/marketMapper";
 import type { MarketSettings, PricePoint } from "../types/ui";
 
 
@@ -22,7 +22,7 @@ export function useMarketData() {
       compute_ema: settings.maType === "EMA",
       compute_returns: true,
       });
-      const mapped = mapToChartData(res.timestamps, res.close);
+      const mapped = mapToPricePoints(res);
 
       setData(mapped);
     } catch (err: any) {

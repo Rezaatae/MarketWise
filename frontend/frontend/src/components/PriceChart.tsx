@@ -6,11 +6,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
-
-type PricePoint = {
-  date: string;
-  close: number;
-};
+import type { PricePoint } from "../types/ui";
 
 type PriceChartProps = {
   data: PricePoint[];
