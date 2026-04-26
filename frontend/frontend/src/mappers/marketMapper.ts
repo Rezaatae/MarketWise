@@ -1,12 +1,8 @@
 import type { components } from "../types/api";
-import type { PriceChartVM } from "../types/ui";
+import type { PriceChartVM, PricePoint } from "../types/ui";
 
 type MarketResponseDTO = components["schemas"]["MarketResponse"];
 
-type PricePoint = {
-  date: string;
-  close: number;
-};
 
 export function mapToPriceChartVM(dto: MarketResponseDTO): PriceChartVM {
   return {

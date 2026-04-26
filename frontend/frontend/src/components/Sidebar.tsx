@@ -1,27 +1,21 @@
 import { Upload } from 'lucide-react';
-import { useState } from 'react';
 import styles from './Sidebar.module.css';
+import type { MarketSettings } from '../types/ui';
 
 interface SidebarProps {
-  onApplySettings: (settings: any) => void;
+  settings: MarketSettings;
+  onChange: (settings: MarketSettings) => void;
 }
 
-export function Sidebar({ onApplySettings }: SidebarProps) {
-  const [maWindow, setMaWindow] = useState(20);
-  const [maType, setMaType] = useState('SMA');
-  const [volPeriod, setVolPeriod] = useState(30);
-  const [showSignals, setShowSignals] = useState(true);
-  const [selectedAsset, setSelectedAsset] = useState('AAPL');
+type MAType = "SMA" | "EMA";
 
-  const handleApply = () => {
-    onApplySettings({ maWindow, maType, volPeriod, showSignals, selectedAsset });
-  };
-
+export function Sidebar({ settings, onChange }: SidebarProps) {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.content}>
         <section className={styles.section}>
           <h3 className={styles.sectionTitle}>Data</h3>
+
           <button className={styles.uploadButton}>
             <Upload />
             Upload CSV
@@ -30,8 +24,10 @@ export function Sidebar({ onApplySettings }: SidebarProps) {
           <div className={styles.inputGroup}>
             <label className={styles.label}>Asset</label>
             <select
-              value={selectedAsset}
-              onChange={(e) => setSelectedAsset(e.target.value)}
+              value={settings.symbol}
+              onChange={(e) =>
+                onChange({ ...settings, symbol: e.target.value })
+              }
               className={styles.select}
             >
               <option value="AAPL">AAPL - Apple Inc.</option>
@@ -53,8 +49,13 @@ export function Sidebar({ onApplySettings }: SidebarProps) {
               <label className={styles.label}>Window</label>
               <input
                 type="number"
-                value={maWindow}
-                onChange={(e) => setMaWindow(Number(e.target.value))}
+                value={settings.window}
+                onChange={(e) =>
+                  onChange({
+                    ...settings,
+                    window: Number(e.target.value),
+                  })
+                }
                 className={styles.input}
               />
             </div>
@@ -62,8 +63,13 @@ export function Sidebar({ onApplySettings }: SidebarProps) {
             <div className={styles.inputGroup}>
               <label className={styles.label}>Type</label>
               <select
-                value={maType}
-                onChange={(e) => setMaType(e.target.value)}
+                value={settings.maType}
+                onChange={(e) =>
+                  onChange({
+                    ...settings,
+                    maType: e.target.value as MAType,
+                  })
+                }
                 className={styles.select}
               >
                 <option value="SMA">SMA (Simple)</option>
@@ -79,8 +85,13 @@ export function Sidebar({ onApplySettings }: SidebarProps) {
               <label className={styles.label}>Period</label>
               <input
                 type="number"
-                value={volPeriod}
-                onChange={(e) => setVolPeriod(Number(e.target.value))}
+                value={settings.volPeriod}
+                onChange={(e) =>
+                  onChange({
+                    ...settings,
+                    volPeriod: Number(e.target.value),
+                  })
+                }
                 className={styles.input}
               />
             </div>
@@ -89,22 +100,22 @@ export function Sidebar({ onApplySettings }: SidebarProps) {
 
         <section className={styles.section}>
           <h3 className={styles.sectionTitle}>Signals</h3>
+
           <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
-              checked={showSignals}
-              onChange={(e) => setShowSignals(e.target.checked)}
+              checked={settings.showSignals}
+              onChange={(e) =>
+                onChange({
+                  ...settings,
+                  showSignals: e.target.checked,
+                })
+              }
               className={styles.checkbox}
             />
             <span>Show Buy/Sell Markers</span>
           </label>
         </section>
-      </div>
-
-      <div className={styles.footer}>
-        <button onClick={handleApply} className={styles.applyButton}>
-          Apply Settings
-        </button>
       </div>
     </aside>
   );

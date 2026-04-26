@@ -1,7 +1,10 @@
 import styles from './App.module.css';
-import LoadButton from './components/LoadButton';
+import { useState } from 'react';
 import PriceChart from './components/PriceChart';
 import { useMarketData } from './hooks/useMarketData';
+import { Header } from './components/Header';
+import { Sidebar } from './components/Sidebar';
+import type { MarketSettings } from './types/ui';
 
 
 function App() {
@@ -13,15 +16,31 @@ function App() {
     loading,
     error,
   } = useMarketData();
+  const [selectedAsset, setSelectedAsset] = useState('AAPL');
+  const [settings, setSettings] = useState<MarketSettings>({
+  symbol: "AAPL",
+  window: 20,
+  maType: "SMA",
+  volPeriod: 30,
+  showSignals: true,
+});
+  const handleApplySettings = async (settings: MarketSettings) => {
+  console.log(settings);
 
+  // call your existing load function but pass config
+  await loadAlpha(settings.symbol, settings);
+};
 
   return (
     <div className={styles.app}>
-      <h1 style={{ color: 'white', backgroundColor: 'black' }}>Header</h1>
-      <LoadButton onClick={loadAlpha} loading={loading} />
+      <Header
+        selectedAsset={settings.symbol}
+        dateRange="Jan 1 - Mar 31, 2026"
+        onLoadData={() => loadAlpha(settings.symbol, settings)}
+      />
 
       <div className={styles.layout}>
-        <h1 style={{ color: 'white', backgroundColor: 'black' }}>sidebar section</h1>
+        <Sidebar settings={settings} onChange={setSettings} />
         <main className={styles.chartsection}>
           <h1 style={{ color: 'white', backgroundColor: 'black' }}>|chart section</h1>
           <div className={styles.chartSection}>

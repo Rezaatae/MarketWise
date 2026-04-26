@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { fetchAlpha } from "../api/market";
 import { mapToChartData } from "../mappers/marketMapper";
+import type { MarketSettings, PricePoint } from "../types/ui";
 
-type PricePoint = {
-  date: string;
-  close: number;
-};
 
 
 export function useMarketData() {
@@ -14,12 +11,17 @@ export function useMarketData() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadAlpha = async () => {
+  const loadAlpha = async (symbol: string, settings: MarketSettings) => {
     try {
       setLoading(true);
       setError(null);
 
-      const res = await fetchAlpha(symbol);
+      const res = await fetchAlpha(symbol, {
+      window: settings.window,
+      compute_sma: settings.maType === "SMA",
+      compute_ema: settings.maType === "EMA",
+      compute_returns: true,
+      });
       const mapped = mapToChartData(res.timestamps, res.close);
 
       setData(mapped);

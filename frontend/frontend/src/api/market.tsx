@@ -3,7 +3,7 @@ import type { components } from "../types/api";
 const BASE_URL = "http://localhost:8000";
 type MarketResponseDTO = components["schemas"]["MarketResponse"];
 
-export async function fetchAlpha(symbol: string): Promise<MarketResponseDTO> {
+export async function fetchAlpha(symbol: string, config: any): Promise<MarketResponseDTO> {
   const res = await fetch(
     `${BASE_URL}/api/market/alpha-market-data/${symbol}`,
     {
@@ -11,7 +11,7 @@ export async function fetchAlpha(symbol: string): Promise<MarketResponseDTO> {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(config),
     }
   );
 
