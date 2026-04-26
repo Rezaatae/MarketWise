@@ -1,3 +1,10 @@
+export type Metrics = {
+  returns?: number;
+  volatility?: number;
+  sharpeRatio?: number;
+  maxDrawdown?: number;
+};
+
 export type PricePoint = {
   date: string;
   close: number;

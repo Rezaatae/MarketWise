@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { fetchAlpha } from "../api/market";
-import { mapToPricePoints } from "../mappers/marketMapper";
-import type { MarketSettings, PricePoint } from "../types/ui";
+import { mapToMetricValues, mapToPricePoints } from "../mappers/marketMapper";
+import type{ Metrics, MarketSettings, PricePoint } from "../types/ui";
 
 
 
 export function useMarketData() {
   const [symbol, setSymbol] = useState("AAPL");
   const [data, setData] = useState<PricePoint[]>([]);
+  const [metrics, setMetrics] = useState<Metrics | null>(null)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,8 +24,10 @@ export function useMarketData() {
       compute_returns: true,
       });
       const mapped = mapToPricePoints(res);
+      const metricvaluesObj = mapToMetricValues(res)
 
       setData(mapped);
+      setMetrics(metricvaluesObj);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -34,6 +37,7 @@ export function useMarketData() {
 
   return {
     data,
+    metrics,
     symbol,
     setSymbol,
     loadAlpha,

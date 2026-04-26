@@ -5,11 +5,13 @@ import { useMarketData } from './hooks/useMarketData';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import type { MarketSettings } from './types/ui';
+import { MetricCard } from './components/MetricCard';
 
 
 function App() {
   const {
     data,
+    metrics,
     symbol,
     setSymbol,
     loadAlpha,
@@ -34,18 +36,46 @@ function App() {
 
       <div className={styles.layout}>
         <Sidebar settings={settings} onChange={setSettings} />
-        <main className={styles.chartsection}>
+        <main className={styles.main}>
           <h1 style={{ color: 'white', backgroundColor: 'black' }}>|chart section</h1>
           <div className={styles.chartSection}>
             <h1 style={{ color: 'white', backgroundColor: 'black' }}>|price chart</h1>
             <PriceChart data={data ?? []} />
           </div>
           <div className={styles.metricsSection}>
-            <h1 style={{ color: 'white', backgroundColor: 'black' }}>|metrics section</h1>
+            <h2 className={styles.metricsTitle}>Performance Metrics</h2>
+            {metrics && (
+              <div className={styles.metricsGrid}>
+                <MetricCard
+                  label="Returns"
+                  value={metrics.returns}
+                  suffix="%"
+                  isPositive={(metrics.returns ?? 0) > 0}
+                />
+
+                <MetricCard
+                  label="Volatility"
+                  value={metrics.volatility}
+                  suffix="%"
+                />
+
+                <MetricCard
+                  label="Sharpe Ratio"
+                  value={metrics.sharpeRatio}
+                  isPositive={(metrics.sharpeRatio ?? 0) > 1}
+                />
+
+                <MetricCard
+                  label="Max Drawdown"
+                  value={metrics.maxDrawdown}
+                  suffix="%"
+                  isPositive={false}
+                />
+              </div>
+            )}
           </div>
         </main>
       </div>
-      
     </div>
     // <div style={{ padding: 20 }}>
     //   <h1>Market Dashboard</h1>
