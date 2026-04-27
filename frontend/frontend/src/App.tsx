@@ -37,9 +37,7 @@ function App() {
       <div className={styles.layout}>
         <Sidebar settings={settings} onChange={setSettings} />
         <main className={styles.main}>
-          <h1 style={{ color: 'white', backgroundColor: 'black' }}>|chart section</h1>
           <div className={styles.chartSection}>
-            <h1 style={{ color: 'white', backgroundColor: 'black' }}>|price chart</h1>
             <PriceChart data={data ?? []} />
           </div>
           <div className={styles.metricsSection}>
