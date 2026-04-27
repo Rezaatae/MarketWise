@@ -29,6 +29,11 @@ function PriceChart({ data }: PriceChartProps) {
         <p className={styles.tooltipPrice}>
           Price: ${payload[0].value.toFixed(2)}
         </p>
+        {payload[1] && (
+            <p className={styles.tooltipMa}>
+              MA: ${payload[1].value.toFixed(2)}
+            </p>
+          )}
       </div>
     );
   }
@@ -42,6 +47,10 @@ function PriceChart({ data }: PriceChartProps) {
           <div className={styles.legendItem}>
             <div className={`${styles.legendLine} ${styles.priceLine}`}></div>
             <span>Price</span>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={`${styles.legendLine} ${styles.maLine}`}></div>
+            <span>Moving Average</span>
           </div>
         </div>
       </div>
@@ -74,6 +83,14 @@ function PriceChart({ data }: PriceChartProps) {
               dot={false}
               activeDot={{ r: 4 }}
             />
+            <Line
+            type="monotone"
+            dataKey="ma"
+            stroke="#EAB308"
+            strokeWidth={2}
+            dot={false}
+            strokeDasharray="5 5"
+          />
       </LineChart>
     </ResponsiveContainer>
     </div>

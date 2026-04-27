@@ -8,6 +8,7 @@ export type Metrics = {
 export type PricePoint = {
   date: string;
   close: number;
+  ma: number | null;
 };
 
 export type MarketSettings = {
