@@ -26,11 +26,18 @@ function App() {
   showSignals: true,
 });
 
+const formatDate = (value: string) =>
+  new Date(value).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
   return (
     <div className={styles.app}>
       <Header
         selectedAsset={settings.symbol}
-        dateRange="Jan 1 - Mar 31, 2026"
+        dateRange={`${formatDate(data[0]?.date)} - ${formatDate(data[data.length - 1]?.date)}`}
         onLoadData={() => loadAlpha(settings.symbol, settings)}
       />
 

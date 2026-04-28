@@ -15,7 +15,7 @@ export function Header({
   return (
     <header className={styles.header}>
       <div className={styles.leftSection}>
-        <h1 className={styles.title}>Market Data Analyzer</h1>
+        <h1 className={styles.title}>MarketWise</h1>
         <div className={styles.assetInfo}>
           <span>Asset:</span>
           <span>{selectedAsset}</span>
