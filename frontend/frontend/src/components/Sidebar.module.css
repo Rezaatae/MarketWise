@@ -149,3 +149,20 @@
 .applyButton:hover {
   background: #1d4ed8;
 }
+
+.loadButton {
+  padding: 6px 16px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-sizing: border-box;
+}
+
+.loadButton:hover {
+  background: #1d4ed8;
+}

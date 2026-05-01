@@ -12,15 +12,12 @@ function App() {
   const {
     data,
     metrics,
-    symbol,
-    setSymbol,
     loadAlpha,
-    loading,
-    error,
   } = useMarketData();
-  const [settings, setSettings] = useState<MarketSettings>({
+
+  const [config, setConfig] = useState<MarketSettings>({
   symbol: "AAPL",
-  window: 20,
+  maWindow: 20,
   maType: "SMA",
   volPeriod: 30,
   showSignals: true,
@@ -36,13 +33,13 @@ const formatDate = (value: string) =>
   return (
     <div className={styles.app}>
       <Header
-        selectedAsset={settings.symbol}
+        selectedAsset={config.symbol}
         dateRange={`${formatDate(data[0]?.date)} - ${formatDate(data[data.length - 1]?.date)}`}
-        onLoadData={() => loadAlpha(settings.symbol, settings)}
+        onLoadData={() => loadAlpha(config.symbol, config)}
       />
 
       <div className={styles.layout}>
-        <Sidebar settings={settings} onChange={setSettings} />
+        <Sidebar config={config} onChange={setConfig}/>
         <main className={styles.main}>
           <div className={styles.chartSection}>
             <PriceChart data={data ?? []} />
@@ -82,26 +79,7 @@ const formatDate = (value: string) =>
         </main>
       </div>
     </div>
-    // <div style={{ padding: 20 }}>
-    //   <h1>Market Dashboard</h1>
 
-    //   <SymbolInput value={symbol} onChange={setSymbol} />
-    //   <LoadButton onClick={loadAlpha} loading={loading} />
-
-    //   <FileUploader onUpload={loadCSV} />
-    //   {/* {data && (
-    //     <>
-    //       <ReturnsChart
-    //         data={data}
-    //       />
-        
-    //     </>
-    //   )} */}
-    //   {error && <p style={{ color: "red" }}>{error}</p>}
-
-    //   <PriceChart data={data?.data ?? []} />
-    //   <OHLCVTable data={data?.data ?? []} />
-    // </div>
   );
 }
 

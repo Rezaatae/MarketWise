@@ -18,7 +18,7 @@ export function useMarketData() {
       setError(null);
 
       const res = await fetchAlpha(symbol, {
-      window: settings.window,
+      window: settings.maWindow,
       compute_sma: settings.maType === "SMA",
       compute_ema: settings.maType === "EMA",
       compute_returns: true,

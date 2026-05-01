@@ -51,11 +51,19 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
 async def get_market_data(source: str, config: MetricsRequest, symbol: str = None, file: UploadFile = None):
     if source == "csv":
         data = await csv_to_ohlcv(file)
-        closes = [row.price.close for row in data]
-        return {
-            "symbol": symbol or "csv",
-            "source": "csv"
-        }
+
+        if config:
+            metrics = compute_metrics(data)
+            return MarketResponse(
+                symbol=symbol or "csv",
+                source="csv",
+                **metrics
+            )
+
+        return MarketResponse(
+            symbol=symbol or "csv",
+            source="csv"
+        )
     
     elif source == "alpha":
         data = await alpha_to_ohlcv(symbol)

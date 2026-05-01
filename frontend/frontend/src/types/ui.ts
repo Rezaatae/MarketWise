@@ -13,7 +13,7 @@ export type PricePoint = {
 
 export type MarketSettings = {
   symbol: string;
-  window: number;
+  maWindow: number;
   maType: "SMA" | "EMA";
   volPeriod: number;
   showSignals: boolean;

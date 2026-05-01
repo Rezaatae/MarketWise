@@ -1,32 +1,85 @@
-import { Upload } from 'lucide-react';
 import styles from './Sidebar.module.css';
+import { useState, useRef } from "react";
+import { Upload } from "lucide-react";
 import type { MarketSettings } from '../types/ui';
+import { useFileUploader } from "../hooks/useFileUploader";
 
 interface SidebarProps {
-  settings: MarketSettings;
+  config: MarketSettings;
   onChange: (settings: MarketSettings) => void;
 }
 
 type MAType = "SMA" | "EMA";
 
-export function Sidebar({ settings, onChange }: SidebarProps) {
+export function Sidebar({ config, onChange,  }: SidebarProps) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const { upload } = useFileUploader();
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileUpload = async () => {
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+
+    try {
+      await upload(
+        file,
+        config);
+
+      console.log("Upload successful");
+
+      setFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+
+    } catch (err) {
+      console.error("Upload failed");
+    }
+  };
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.content}>
         <section className={styles.section}>
           <h3 className={styles.sectionTitle}>Data</h3>
+          <div className={styles.inputGroup}>
+              <button
+                type="button"
+                className={styles.uploadButton}
+                onClick={handleButtonClick}
+              >
+                <Upload />
+                Upload CSV
+              </button>
 
-          <button className={styles.uploadButton}>
-            <Upload />
-            Upload CSV
-          </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".csv"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                style={{ display: "none" }}
+              />
 
+              <button
+                onClick={handleFileUpload}
+                disabled={!file}
+                className={styles.loadButton}
+                >
+                Load File Data
+              </button>
+          </div>
           <div className={styles.inputGroup}>
             <label className={styles.label}>Asset</label>
             <select
-              value={settings.symbol}
+              value={config.symbol}
               onChange={(e) =>
-                onChange({ ...settings, symbol: e.target.value })
+                onChange({ ...config, symbol: e.target.value })
               }
               className={styles.select}
             >
@@ -49,11 +102,11 @@ export function Sidebar({ settings, onChange }: SidebarProps) {
               <label className={styles.label}>Window</label>
               <input
                 type="number"
-                value={settings.window}
+                value={config.maWindow}
                 onChange={(e) =>
                   onChange({
-                    ...settings,
-                    window: Number(e.target.value),
+                    ...config,
+                    maWindow: Number(e.target.value),
                   })
                 }
                 className={styles.input}
@@ -63,10 +116,10 @@ export function Sidebar({ settings, onChange }: SidebarProps) {
             <div className={styles.inputGroup}>
               <label className={styles.label}>Type</label>
               <select
-                value={settings.maType}
+                value={config.maType}
                 onChange={(e) =>
                   onChange({
-                    ...settings,
+                    ...config,
                     maType: e.target.value as MAType,
                   })
                 }
@@ -85,10 +138,10 @@ export function Sidebar({ settings, onChange }: SidebarProps) {
               <label className={styles.label}>Period</label>
               <input
                 type="number"
-                value={settings.volPeriod}
+                value={config.volPeriod}
                 onChange={(e) =>
                   onChange({
-                    ...settings,
+                    ...config,
                     volPeriod: Number(e.target.value),
                   })
                 }
@@ -104,10 +157,10 @@ export function Sidebar({ settings, onChange }: SidebarProps) {
           <label className={styles.checkboxLabel}>
             <input
               type="checkbox"
-              checked={settings.showSignals}
+              checked={config.showSignals}
               onChange={(e) =>
                 onChange({
-                  ...settings,
+                  ...config,
                   showSignals: e.target.checked,
                 })
               }

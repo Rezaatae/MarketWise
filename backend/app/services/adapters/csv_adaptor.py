@@ -2,6 +2,8 @@ import csv
 from io import StringIO
 from fastapi import UploadFile
 from app.schemas.ohlcv import OHLCV, OHLCVSeries
+from datetime import datetime
+
 
 
 async def csv_to_ohlcv(file: UploadFile):
@@ -14,21 +16,27 @@ async def csv_to_ohlcv(file: UploadFile):
 
     for row in reader:
         price = OHLCV(
-            open=row.get("open"),
-            high=row.get("high"),
-            low=row.get("low"),
-            close=row.get("close"),
-            volume=row.get("open")
+            timestamp=datetime.fromisoformat(row["timestamp"]),
+            open=float(row["open"]),
+            high=float(row["high"]),
+            low=float(row["low"]),
+            close=float(row["close"]),
+            volume=float(row.get("volume", 0))
         )
 
-        if all(v is None for v in price.model_dump().values()):
-            continue
-
         result.append(
-            OHLCVRow(
-                date=row.get("timestamp") or "",
-                price=price
+            OHLCV(
+                timestamp=...,
+                open=...,
+                high=...,
+                low=...,
+                close=...,
+                volume=...
             )
         )
 
-        return result
+    return OHLCVSeries(
+    symbol="csv",
+    data=result
+)
+
