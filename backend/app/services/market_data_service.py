@@ -53,7 +53,7 @@ async def get_market_data(source: str, config: MetricsRequest, symbol: str = Non
         data = await csv_to_ohlcv(file)
 
         if config:
-            metrics = compute_metrics(data)
+            metrics = compute_metrics(data, config)
             return MarketResponse(
                 symbol=symbol or "csv",
                 source="csv",

@@ -1,19 +1,27 @@
-import styles from './App.module.css';
 import { useState } from 'react';
+import styles from './App.module.css';
+import type { MarketSettings } from './types/ui';
 import PriceChart from './components/PriceChart';
-import { useMarketData } from './hooks/useMarketData';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
-import type { MarketSettings } from './types/ui';
 import { MetricCard } from './components/MetricCard';
+import { useMarketData } from './hooks/useMarketData';
+import { useAlphaData } from './hooks/useAlphaData';
 
 
 function App() {
+  const market = useMarketData();
+  const alpha = useAlphaData(market.setFromAlpha);
+
   const {
-    data,
-    metrics,
-    loadAlpha,
-  } = useMarketData();
+    priceData,
+    priceMetrics,
+  } = market;
+
+  const data = priceData
+  const metrics = priceMetrics
+  console.log("reztest print data")
+  console.log(priceData)
 
   const [config, setConfig] = useState<MarketSettings>({
   symbol: "AAPL",
@@ -35,11 +43,11 @@ const formatDate = (value: string) =>
       <Header
         selectedAsset={config.symbol}
         dateRange={`${formatDate(data[0]?.date)} - ${formatDate(data[data.length - 1]?.date)}`}
-        onLoadData={() => loadAlpha(config.symbol, config)}
+        onLoadData={() => alpha.loadAlpha(config.symbol, config)}
       />
 
       <div className={styles.layout}>
-        <Sidebar config={config} onChange={setConfig}/>
+        <Sidebar config={config} onChange={setConfig} setFromFile={market.setFromFile}/>
         <main className={styles.main}>
           <div className={styles.chartSection}>
             <PriceChart data={data ?? []} />

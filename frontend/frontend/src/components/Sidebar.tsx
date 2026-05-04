@@ -1,20 +1,21 @@
 import styles from './Sidebar.module.css';
 import { useState, useRef } from "react";
 import { Upload } from "lucide-react";
-import type { MarketSettings } from '../types/ui';
+import type { MarketSettings, Metrics, PricePoint } from '../types/ui';
 import { useFileUploader } from "../hooks/useFileUploader";
 
 interface SidebarProps {
   config: MarketSettings;
   onChange: (settings: MarketSettings) => void;
+  setFromFile: (data: PricePoint[], metrics: Metrics) => void;
 }
 
 type MAType = "SMA" | "EMA";
 
-export function Sidebar({ config, onChange,  }: SidebarProps) {
+export function Sidebar({ config, onChange, setFromFile}: SidebarProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const { upload } = useFileUploader();
+  const { upload } = useFileUploader(setFromFile);
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
