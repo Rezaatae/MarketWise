@@ -33,7 +33,8 @@ class MarketResponse(BaseModel):
     max_drawdown: Optional[float] = None
 
 class MetricsRequest(BaseModel):
-    window: int = 20
+    maWindow: int = 20
+    volPeriod: int = 20
     risk_free_rate: float = 0.0
 
     compute_returns: bool = True

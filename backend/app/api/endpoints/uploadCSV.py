@@ -1,6 +1,4 @@
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
-from typing import Optional
-import json
 from app.services.market_data_service import get_market_data
 from app.schemas.response_model import MarketResponse, MetricsRequest
 from app.validators.documentValidator import DocumentValidator

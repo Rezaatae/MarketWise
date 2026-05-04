@@ -46,6 +46,8 @@ export interface components {
         Body_upload_csv_api_upload_upload_csv_post: {
             /** File */
             file: string;
+            /** Config */
+            config: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -80,10 +82,15 @@ export interface components {
         /** MetricsRequest */
         MetricsRequest: {
             /**
-             * Window
+             * Mawindow
              * @default 20
              */
-            window: number;
+            maWindow: number;
+            /**
+             * Volperiod
+             * @default 20
+             */
+            volPeriod: number;
             /**
              * Risk Free Rate
              * @default 0
@@ -179,9 +186,7 @@ export interface operations {
     };
     upload_csv_api_upload_upload_csv_post: {
         parameters: {
-            query: {
-                symbol: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;

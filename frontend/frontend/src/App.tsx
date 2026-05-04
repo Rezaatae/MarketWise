@@ -20,8 +20,6 @@ function App() {
 
   const data = priceData
   const metrics = priceMetrics
-  console.log("reztest print data")
-  console.log(priceData)
 
   const [config, setConfig] = useState<MarketSettings>({
   symbol: "AAPL",

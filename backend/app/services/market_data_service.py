@@ -28,13 +28,13 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
             result["total_return"] = total_return
 
         if config.compute_sma:
-            result["sma"] = compute_sma(close, config.window).tolist()
+            result["sma"] = compute_sma(close, config.maWindow).tolist()
 
         if config.compute_ema:
-            result["ema"] = compute_ema(close, config.window).tolist()
+            result["ema"] = compute_ema(close, config.maWindow).tolist()
         
         if config.compute_volatility:
-             rolling_std, annualized = compute_volatility(log, config.window)
+             rolling_std, annualized = compute_volatility(log, config.volPeriod)
              result["rolling_std"] = rolling_std.tolist()
              result["annualized_volatility"] = annualized
 

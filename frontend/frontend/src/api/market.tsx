@@ -4,7 +4,7 @@ import type { MarketSettings } from "../types/ui";
 const BASE_URL = "http://localhost:8000";
 type MarketResponseDTO = components["schemas"]["MarketResponse"];
 
-export async function fetchAlpha(symbol: string, config: any): Promise<MarketResponseDTO> {
+export async function fetchAlpha(symbol: string, config: MarketSettings): Promise<MarketResponseDTO> {
   const res = await fetch(
     `${BASE_URL}/api/market/alpha-market-data/${symbol}`,
     {
