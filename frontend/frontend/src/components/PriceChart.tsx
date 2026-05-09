@@ -6,15 +6,19 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  ReferenceDot,
 } from "recharts";
 import type { PricePoint } from "../types/ui";
 import styles from './PriceChart.module.css'
 
 type PriceChartProps = {
   data: PricePoint[];
+  showSignals: boolean;
 };
 
-function PriceChart({ data }: PriceChartProps) {
+function PriceChart({ data, showSignals }: PriceChartProps) {
+  const buySignals = data.filter(d => d.signal === 1);
+  const sellSignals = data.filter(d => d.signal === -1);
   const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const rawDate = payload[0].payload.date;
@@ -91,6 +95,45 @@ function PriceChart({ data }: PriceChartProps) {
             dot={false}
             strokeDasharray="5 5"
           />
+          {showSignals && buySignals.map((signal, i) => (
+            <ReferenceDot
+              key={`buy-${i}`}
+              x={buySignals[i].date}
+              y={buySignals[i].close}
+              r={6}
+              fill="#22C55E"
+              stroke="#fff"
+              strokeWidth={2}
+              shape={(props: any) => (
+                <polygon
+                  points={`${props.cx},${props.cy - 8} ${props.cx - 6},${props.cy + 4} ${props.cx + 6},${props.cy + 4}`}
+                  fill="#22C55E"
+                  stroke="#fff"
+                  strokeWidth={2}
+                />
+              )}
+            />
+          ))}
+
+          {showSignals && sellSignals.map((signal, i) => (
+            <ReferenceDot
+              key={`sell-${i}`}
+              x={sellSignals[i].date}
+              y={sellSignals[i].close}
+              r={6}
+              fill="#EF4444"
+              stroke="#fff"
+              strokeWidth={2}
+              shape={(props: any) => (
+                <polygon
+                  points={`${props.cx},${props.cy + 8} ${props.cx - 6},${props.cy - 4} ${props.cx + 6},${props.cy - 4}`}
+                  fill="#EF4444"
+                  stroke="#fff"
+                  strokeWidth={2}
+                />
+              )}
+            />
+          ))}
       </LineChart>
     </ResponsiveContainer>
     </div>

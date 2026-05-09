@@ -78,6 +78,8 @@ export interface components {
             sharpe_ratio?: number | null;
             /** Max Drawdown */
             max_drawdown?: number | null;
+            /** Signal */
+            signal?: (-1 | 0 | 1)[] | null;
         };
         /** MetricsRequest */
         MetricsRequest: {
@@ -126,6 +128,11 @@ export interface components {
              * @default true
              */
             compute_drawdown: boolean;
+            /**
+             * Show Signal
+             * @default true
+             */
+            show_signal: boolean;
         };
         /** ValidationError */
         ValidationError: {

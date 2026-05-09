@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Literal
 from datetime import datetime
 
 
@@ -31,6 +31,7 @@ class MarketResponse(BaseModel):
 
     sharpe_ratio: Optional[float] = None
     max_drawdown: Optional[float] = None
+    signal: Optional[List[Literal[-1, 0, 1]]] = None
 
 class MetricsRequest(BaseModel):
     maWindow: int = 20
@@ -43,3 +44,4 @@ class MetricsRequest(BaseModel):
     compute_volatility: bool = True
     compute_sharpe: bool = True
     compute_drawdown: bool = True
+    show_signal: bool = True

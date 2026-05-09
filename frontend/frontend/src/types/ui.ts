@@ -9,6 +9,7 @@ export type PricePoint = {
   date: string;
   close: number;
   ma: number | null;
+  signal: number | null;
 };
 
 export type MarketSettings = {

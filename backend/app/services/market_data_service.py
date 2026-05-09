@@ -6,6 +6,7 @@ from app.services.adapters.csv_adaptor import csv_to_ohlcv
 from app.services.adapters.alpha_adapter import alpha_to_ohlcv
 from app.services.analytics.returns import compute_returns
 from app.services.analytics.volatility import compute_volatility
+from app.services.analytics.signal import compute_signal
 from app.services.analytics.risk import compute_sharpe, compute_drawdown
 import pandas as pd
 
@@ -45,6 +46,14 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
         if config.compute_drawdown:
              drawdown = compute_drawdown(close)
              result["max_drawdown"] = drawdown
+
+        if config.show_signal and (config.compute_ema or config.compute_sma):
+            if config.compute_ema:
+                ma = compute_sma(close, config.maWindow)
+            else:
+                ma = compute_ema(close, config.maWindow)
+            signal = compute_signal(close, ma)
+            result["signal"] = signal.tolist()
 
         return result
 

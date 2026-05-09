@@ -16,6 +16,7 @@ export function mapToPricePoints(dto: MarketResponseDTO): PricePoint[] {
   return dto.timestamps.map((t, i) => ({
     date: t,
     close: dto.close[i],
-    ma: dto.sma[i]
+    ma: dto.sma[i],
+    signal: dto.signal[i]
   }));
 }
