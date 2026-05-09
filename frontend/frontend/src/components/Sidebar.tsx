@@ -10,7 +10,7 @@ interface SidebarProps {
   setFromFile: (data: PricePoint[], metrics: Metrics) => void;
 }
 
-type MAType = "SMA" | "EMA";
+type MAType = "SMA" | "EMA" | "BOTH";
 
 export function Sidebar({ config, onChange, setFromFile}: SidebarProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -128,6 +128,7 @@ export function Sidebar({ config, onChange, setFromFile}: SidebarProps) {
               >
                 <option value="SMA">SMA (Simple)</option>
                 <option value="EMA">EMA (Exponential)</option>
+                <option value="BOTH">SMA & EMA</option>
               </select>
             </div>
           </div>

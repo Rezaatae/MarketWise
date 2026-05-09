@@ -14,9 +14,10 @@ import styles from './PriceChart.module.css'
 type PriceChartProps = {
   data: PricePoint[];
   showSignals: boolean;
+  maType: "SMA" | "EMA" | "BOTH";
 };
 
-function PriceChart({ data, showSignals }: PriceChartProps) {
+function PriceChart({ data, showSignals, maType }: PriceChartProps) {
   const buySignals = data.filter(d => d.signal === 1);
   const sellSignals = data.filter(d => d.signal === -1);
   const CustomTooltip = ({ active, payload }: any) => {
@@ -87,19 +88,27 @@ function PriceChart({ data, showSignals }: PriceChartProps) {
               dot={false}
               activeDot={{ r: 4 }}
             />
-            <Line
+            {(maType === "SMA" || maType === "BOTH") && <Line
             type="monotone"
-            dataKey="ma"
+            dataKey="sma"
+            stroke="#08ea48"
+            strokeWidth={2}
+            dot={false}
+            strokeDasharray="5 5"
+          />}
+          {(maType === "EMA" || maType === "BOTH") && <Line
+            type="monotone"
+            dataKey="ema"
             stroke="#EAB308"
             strokeWidth={2}
             dot={false}
             strokeDasharray="5 5"
-          />
-          {showSignals && buySignals.map((signal, i) => (
+          />}
+          {(showSignals && ["SMA", "BOTH"].includes(maType)) && buySignals.map((signal, i) => (
             <ReferenceDot
               key={`buy-${i}`}
-              x={buySignals[i].date}
-              y={buySignals[i].close}
+              x={signal.date}
+              y={signal.close}
               r={6}
               fill="#22C55E"
               stroke="#fff"
@@ -115,11 +124,11 @@ function PriceChart({ data, showSignals }: PriceChartProps) {
             />
           ))}
 
-          {showSignals && sellSignals.map((signal, i) => (
+          {(showSignals && ["SMA", "BOTH"].includes(maType)) && sellSignals.map((signal, i) => (
             <ReferenceDot
               key={`sell-${i}`}
-              x={sellSignals[i].date}
-              y={sellSignals[i].close}
+              x={signal.date}
+              y={signal.close}
               r={6}
               fill="#EF4444"
               stroke="#fff"

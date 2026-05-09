@@ -8,14 +8,15 @@ export type Metrics = {
 export type PricePoint = {
   date: string;
   close: number;
-  ma: number | null;
+  sma: number | null;
+  ema: number | null;
   signal: number | null;
 };
 
 export type MarketSettings = {
   symbol: string;
   maWindow: number;
-  maType: "SMA" | "EMA";
+  maType: "SMA" | "EMA" | "BOTH";
   volPeriod: number;
   showSignals: boolean;
 };

@@ -48,7 +48,7 @@ const formatDate = (value: string) =>
         <Sidebar config={config} onChange={setConfig} setFromFile={market.setFromFile}/>
         <main className={styles.main}>
           <div className={styles.chartSection}>
-            <PriceChart data={data ?? []} showSignals={config.showSignals} />
+            <PriceChart data={data ?? []} showSignals={config.showSignals} maType={config.maType} />
           </div>
           <div className={styles.metricsSection}>
             <h2 className={styles.metricsTitle}>Performance Metrics</h2>
