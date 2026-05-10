@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def compute_sharpe(log_returns: pd.Series, risk_free_rate: float):
+def compute_sharpe(log_returns: pd.Series, risk_free_rate: float) -> float:
     returns = log_returns.dropna()
 
     if len(returns) < 2:
@@ -16,7 +16,7 @@ def compute_sharpe(log_returns: pd.Series, risk_free_rate: float):
     return float((excess.mean() / std) * (252 ** 0.5))
 
 
-def compute_drawdown(close: pd.Series):
+def compute_drawdown(close: pd.Series) -> float:
     prices = close.dropna()
 
     if len(prices) < 2:
