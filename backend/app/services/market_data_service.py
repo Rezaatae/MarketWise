@@ -10,6 +10,34 @@ from app.services.analytics.signal import compute_signal
 from app.services.analytics.risk import compute_sharpe, compute_drawdown
 import pandas as pd
 
+async def get_market_data(source: str, config: MetricsRequest, symbol: str = None, file: UploadFile = None) -> MarketResponse:
+    if source == "csv":
+        data = await csv_to_ohlcv(file)
+
+        if config:
+            metrics = compute_metrics(data, config)
+            return MarketResponse(
+                symbol=symbol or "csv",
+                source="csv",
+                **metrics
+            )
+
+        return MarketResponse(
+            symbol=symbol or "csv",
+            source="csv"
+        )
+    
+    elif source == "alpha":
+        data = await alpha_to_ohlcv(symbol)
+        metrics = compute_metrics(data, config)
+        return MarketResponse(
+             symbol=symbol,
+             source="alpha_vantage",
+             **metrics
+            )
+    
+    else:
+        raise ValueError("Invalid data source")
 
 def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
         df = pd.DataFrame([d.dict() for d in data.data])
@@ -51,7 +79,7 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
              result["max_drawdown"] = drawdown
 
         if config.show_signal and (config.compute_ema or config.compute_sma):
-            if config.compute_ema:
+            if config.compute_sma:
                 ma = compute_sma(close, config.maWindow)
             else:
                 ma = compute_ema(close, config.maWindow)
@@ -59,32 +87,3 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
             result["signal"] = signal.tolist()
 
         return result
-
-async def get_market_data(source: str, config: MetricsRequest, symbol: str = None, file: UploadFile = None):
-    if source == "csv":
-        data = await csv_to_ohlcv(file)
-
-        if config:
-            metrics = compute_metrics(data, config)
-            return MarketResponse(
-                symbol=symbol or "csv",
-                source="csv",
-                **metrics
-            )
-
-        return MarketResponse(
-            symbol=symbol or "csv",
-            source="csv"
-        )
-    
-    elif source == "alpha":
-        data = await alpha_to_ohlcv(symbol)
-        metrics = compute_metrics(data, config)
-        return MarketResponse(
-             symbol=symbol,
-             source="alpha_vantage",
-             **metrics
-)
-    
-    else:
-        raise ValueError("Invalid data source")
