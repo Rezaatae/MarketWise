@@ -4,7 +4,7 @@ from app.services.analytics.movingAverage import compute_ema, compute_sma
 from fastapi import UploadFile
 from app.services.adapters.csv_adaptor import csv_to_ohlcv
 from app.services.adapters.alpha_adapter import alpha_to_ohlcv
-from app.services.analytics.returns import compute_returns
+from app.services.analytics.returns import compute_simple_returns, compute_log_returns, compute_total_return
 from app.services.analytics.volatility import compute_volatility
 from app.services.analytics.signal import compute_signal
 from app.services.analytics.risk import compute_sharpe, compute_drawdown
@@ -21,7 +21,9 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
             "timestamps": df.index.tolist(),
             "close": close.tolist()
         }
-        simple, log, total_return = compute_returns(close)
+        simple = compute_simple_returns(close)
+        log = compute_log_returns(close)
+        total_return = compute_total_return(close)
 
         if config.compute_returns:
             result["simple_returns"] = simple.tolist()
