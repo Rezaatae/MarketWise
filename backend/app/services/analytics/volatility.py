@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 
-def compute_volatility(log_returns: pd.Series, window: int):
-    rolling_std = log_returns.rolling(window).std()
-    annualized = rolling_std.mean() * np.sqrt(252)
-    return rolling_std, annualized
+def compute_rolling_volatility(log_returns: pd.Series, window: int) -> pd.Series:
+    return log_returns.rolling(window).std()
+
+def compute_annualized_volatility(log_returns: pd.Series) -> float:
+    return log_returns.std() * np.sqrt(252)

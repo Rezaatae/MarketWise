@@ -4,8 +4,8 @@ from app.services.analytics.movingAverage import compute_ema, compute_sma
 from fastapi import UploadFile
 from app.services.adapters.csv_adaptor import csv_to_ohlcv
 from app.services.adapters.alpha_adapter import alpha_to_ohlcv
-from app.services.analytics.returns import compute_simple_returns, compute_log_returns, compute_total_return
-from app.services.analytics.volatility import compute_volatility
+from app.services.analytics.returns import compute_simple_returns, compute_log_returns, compute_total_returns
+from app.services.analytics.volatility import compute_rolling_volatility, compute_annualized_volatility
 from app.services.analytics.signal import compute_signal
 from app.services.analytics.risk import compute_sharpe, compute_drawdown
 import pandas as pd
@@ -23,7 +23,7 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
         }
         simple = compute_simple_returns(close)
         log = compute_log_returns(close)
-        total_return = compute_total_return(close)
+        total_return = compute_total_returns(close)
 
         if config.compute_returns:
             result["simple_returns"] = simple.tolist()
@@ -37,7 +37,8 @@ def compute_metrics(data: OHLCVSeries, config: MetricsRequest):
             result["ema"] = compute_ema(close, config.maWindow).tolist()
         
         if config.compute_volatility:
-             rolling_std, annualized = compute_volatility(log, config.volPeriod)
+             rolling_std = compute_rolling_volatility(log, config.volPeriod)
+             annualized = compute_annualized_volatility(log)
              result["rolling_std"] = rolling_std.tolist()
              result["annualized_volatility"] = annualized
 
