@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 from app.services.adapters.alpha_adapter import alpha_to_ohlcv
 
