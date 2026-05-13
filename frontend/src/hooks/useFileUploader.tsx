@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { uploadCSV } from "../api/market";
+import type { SetMarketData } from "../types/hooks";
 import type { MarketSettings } from "../types/ui";
 import { mapToMetricValues, mapToPricePoints } from "../mappers/marketMapper";
 
-export function useFileUploader(setFromFile) {
+export function useFileUploader(setFromFile: SetMarketData) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

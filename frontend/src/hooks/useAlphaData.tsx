@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { fetchAlpha } from "../api/market";
+import type { SetMarketData } from "../types/hooks";
 import { mapToMetricValues, mapToPricePoints } from "../mappers/marketMapper";
 import type{MarketSettings } from "../types/ui";
 
 
 
-export function useAlphaData(setFromAlpha) {
+export function useAlphaData(setFromAlpha: SetMarketData) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
