@@ -13,11 +13,18 @@ export function mapToMetricValues(dto: MarketResponseDTO): Metrics {
 }
 
 export function mapToPricePoints(dto: MarketResponseDTO): PricePoint[] {
-  return dto.timestamps.map((t, i) => ({
-    date: t,
-    close: dto.close[i] ?? undefined,
-    sma: dto.sma[i] ?? undefined,
-    ema: dto.ema[i] ?? undefined,
-    signal: dto.signal[i] ?? undefined
-  }));
+  return dto.timestamps.map((t, i) => {
+    const sma = dto.sma?.[i];
+    const ema = dto.ema?.[i];
+    const signal = dto.signal?.[i];
+    const close = dto.close?.[i];
+
+    return {
+      date: t,
+      close: close ?? undefined,
+      sma: sma ?? undefined,
+      ema: ema ?? undefined,
+      signal: signal ?? undefined,
+    };
+  });
 }
