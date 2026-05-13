@@ -8,9 +8,9 @@ export type Metrics = {
 export type PricePoint = {
   date: string;
   close: number;
-  sma: number | null;
-  ema: number | null;
-  signal: number | null;
+  sma: number | undefined;
+  ema: number | undefined;
+  signal: number | undefined;
 };
 
 export type MarketSettings = {
