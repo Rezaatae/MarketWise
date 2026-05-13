@@ -1,7 +1,8 @@
 import type { components } from "../types/api";
 import type { MarketSettings } from "../types/ui";
 
-const BASE_URL = "http://localhost:8000";
+// const BASE_URL = "http://localhost:8000";
+const BASE_URL = import.meta.env.VITE_API_URL;
 type MarketResponseDTO = components["schemas"]["MarketResponse"];
 
 export async function fetchAlpha(symbol: string, config: MarketSettings): Promise<MarketResponseDTO> {
