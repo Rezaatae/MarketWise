@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 def compute_signal(close: pd.Series, ma: pd.Series) -> pd.Series:

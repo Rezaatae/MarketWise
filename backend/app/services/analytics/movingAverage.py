@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 def compute_sma(close: pd.Series, window: int) -> pd.Series:

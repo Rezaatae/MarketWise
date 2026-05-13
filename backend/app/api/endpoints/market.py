@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter
 from app.services.market_data_service import get_market_data
 from app.schemas.response_model import MarketResponse, MetricsRequest
 

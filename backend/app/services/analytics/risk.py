@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 def compute_sharpe(log_returns: pd.Series, risk_free_rate: float) -> float:
