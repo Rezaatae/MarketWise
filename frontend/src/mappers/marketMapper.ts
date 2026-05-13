@@ -5,11 +5,11 @@ type MarketResponseDTO = components["schemas"]["MarketResponse"];
 
 export function mapToMetricValues(dto: MarketResponseDTO): Metrics {
   return {
-    returns: dto.total_return,
-    volatility: dto.annualized_volatility,
-    sharpeRatio: dto.sharpe_ratio,
-    maxDrawdown: dto.max_drawdown
-  }
+    returns: dto.total_return ?? undefined,
+    volatility: dto.annualized_volatility ?? undefined,
+    sharpeRatio: dto.sharpe_ratio ?? undefined,
+    maxDrawdown: dto.max_drawdown ?? undefined,
+  };
 }
 
 export function mapToPricePoints(dto: MarketResponseDTO): PricePoint[] {
