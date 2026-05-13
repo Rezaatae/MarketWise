@@ -15,9 +15,9 @@ export function mapToMetricValues(dto: MarketResponseDTO): Metrics {
 export function mapToPricePoints(dto: MarketResponseDTO): PricePoint[] {
   return dto.timestamps.map((t, i) => ({
     date: t,
-    close: dto.close[i],
-    sma: dto.sma[i],
-    ema: dto.ema[i],
-    signal: dto.signal[i]
+    close: dto.close[i] ?? undefined,
+    sma: dto.sma[i] ?? undefined,
+    ema: dto.ema[i] ?? undefined,
+    signal: dto.signal[i] ?? undefined
   }));
 }
