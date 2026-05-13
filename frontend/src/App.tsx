@@ -10,6 +10,9 @@ import { useAlphaData } from './hooks/useAlphaData';
 
 
 function App() {
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  console.log("reztest base url")
+  console.log(BASE_URL)
   const market = useMarketData();
   const alpha = useAlphaData(market.setFromAlpha);
 
