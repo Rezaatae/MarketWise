@@ -8,41 +8,41 @@ jobs:
   backend:
     runs-on: ubuntu-latest
 
-  defaults:
-    run:
-      working-directory: backend
+    defaults:
+      run:
+        working-directory: backend
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-    - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-    - name: Verify Poetry
-      run: poetry --version
+      - name: Verify Poetry
+        run: poetry --version
 
-    - name: Configure Poetry
-      run: poetry config virtualenvs.in-project true
+      - name: Configure Poetry
+        run: poetry config virtualenvs.in-project true
 
-    - name: Install dependencies
-      run: poetry install --no-root
+      - name: Install dependencies
+        run: poetry install --no-root
 
-    - name: Run linting
-      run: poetry run ruff check .
+      - name: Run linting
+        run: poetry run ruff check .
 
-    - name: Run tests
-      run: poetry run pytest
+      - name: Run tests
+        run: poetry run pytest
 
-    - name: Build Docker image
-      run: docker build -t marketwise-backend .
+      - name: Build Docker image
+        run: docker build -t marketwise-backend .
 
   frontend:
     runs-on: ubuntu-latest
