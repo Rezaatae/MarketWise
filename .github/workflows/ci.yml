@@ -6,7 +6,7 @@ on:
 
 jobs:
   backend:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
   defaults:
     run:
@@ -42,7 +42,7 @@ jobs:
       run: poetry run pytest
 
     - name: Build Docker image
-      run: docker build -t marketwise-backend . .
+      run: docker build -t marketwise-backend .
 
   frontend:
     runs-on: ubuntu-latest
