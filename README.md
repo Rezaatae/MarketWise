@@ -82,6 +82,9 @@ Deployments are handled through:
 - Render (backend)
 
 ## Engineering Challenges
+- Normalising raw incoming data from difference sources into a unified internal schema.
+- Structuring response data in a scaleable way in the frontend for each use case and component.
+- Implementing multipart/form-data CSV ingestion with typed validation.
 
 ## Future Improvements
 - Import data in real time.
