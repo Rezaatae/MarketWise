@@ -12,6 +12,12 @@ A full-stack fintech analytics platform that ingests historical price data via C
 Frontend: https://market-wise-pi.vercel.app/  
 Backend API: https://marketwise-09gu.onrender.com/docs
 
+## Demo Notes
+
+The live market data integration uses the free tier of the Alpha Vantage API, which is subject to request rate limits.
+
+If live market data is temporarily unavailable, sample CSV datasets are provided in the repository (in the sample-data folder) and can be uploaded through the CSV ingestion workflow to explore the analytics pipeline and dashboard functionality.
+
 ## Preview
 [YouTube video link goes here]
 
