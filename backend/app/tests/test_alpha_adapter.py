@@ -48,7 +48,7 @@ async def test_alpha_to_ohlcv_rate_limit(monkeypatch):
         mock_get
     )
 
-    with pytest.raises(Exception, match="Rate limit exceeded"):
+    with pytest.raises(Exception, match="Unexpected response: {'Note': 'API call frequency exceeded'}"):
         await alpha_to_ohlcv("AAPL")
 
 @pytest.mark.asyncio
