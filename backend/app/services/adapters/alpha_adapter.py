@@ -1,11 +1,16 @@
 from app.schemas.ohlcv import OHLCV, OHLCVSeries
 from app.clients.alpha_vantage import get_daily_prices
+from fastapi import HTTPException
 
 async def alpha_to_ohlcv(symbol: str):
     raw = await get_daily_prices(symbol)
 
-    if "Note" in raw:
-        raise Exception("Rate limit exceeded")
+    if 'Information' in raw:
+        if "limit is 25 requests per day." in raw['Information']:
+            raise HTTPException(
+                status_code=429,
+                detail="Live market data is temporarily unavailable due to API rate limits. Please try again later or upload a CSV dataset."
+            )
 
     if "Error Message" in raw:
         raise Exception(f"Invalid symbol: {symbol}")

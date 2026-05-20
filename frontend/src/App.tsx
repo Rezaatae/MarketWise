@@ -10,11 +10,10 @@ import { useAlphaData } from './hooks/useAlphaData';
 
 
 function App() {
-  const BASE_URL = import.meta.env.VITE_API_URL;
-  console.log("reztest base url")
-  console.log(BASE_URL)
   const market = useMarketData();
   const alpha = useAlphaData(market.setFromAlpha);
+  const err = alpha.error
+  console.log(err)
 
   const {
     priceData,
@@ -87,6 +86,17 @@ const formatDate = (value: string) =>
           </div>
         </main>
       </div>
+      {err && (
+  <div className={styles.errorOverlay}>
+    <div className={styles.errorModal}>
+      <h2>Error</h2>
+      <p>{err}</p>
+      <button onClick={() => alpha.clearError()}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
 
   );

@@ -28,9 +28,12 @@ export function useAlphaData(setFromAlpha: SetMarketData) {
     }
   };
 
+  const clearError = () => setError(null);
+
   return {
     loadAlpha,
     loading,
     error,
+    clearError,
   };
 }

@@ -9,7 +9,6 @@ async def get_daily_prices(symbol: str):
         "symbol": symbol,
         "apikey": API_KEY
     }
-
     response = requests.get(BASE_URL, params=params)
     response.raise_for_status()
     return response.json()

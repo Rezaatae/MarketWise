@@ -35,7 +35,6 @@ async def get_market_data(source: str, config: MetricsRequest, symbol: str = Non
              source="alpha_vantage",
              **metrics
             )
-    
     else:
         raise ValueError("Invalid data source")
 
