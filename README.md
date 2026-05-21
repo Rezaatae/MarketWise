@@ -12,7 +12,7 @@ A full-stack fintech analytics platform that ingests historical price data via C
 Frontend: https://market-wise-pi.vercel.app/  
 Backend API: https://marketwise-09gu.onrender.com/docs
 
-## Demo Notes
+### Demo Notes
 
 The live market data integration uses the free tier of the Alpha Vantage API, which is subject to request rate limits.
 
@@ -41,7 +41,7 @@ MarketWise uses a decoupled frontend/backend architecture:
 - React
 - Vite
 - TypeScript
-- Chart.js / Recharts
+- Recharts
 
 ### Backend
 - Python
@@ -88,7 +88,7 @@ Deployments are handled through:
 - Render (backend)
 
 ## Engineering Challenges
-- Normalising raw incoming data from difference sources into a unified internal schema.
+- Normalising raw incoming data from different sources into a unified internal schema.
 - Structuring response data in a scaleable way in the frontend for each use case and component.
 - Implementing multipart/form-data CSV ingestion with typed validation.
 
